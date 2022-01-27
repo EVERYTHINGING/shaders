@@ -183,7 +183,7 @@ function getWebcamVideo(callback){
 	window.URL = window.URL || window.webkitURL;
 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 	//get webcam
-	navigator.getUserMedia({
+	navigator.mediaDevices.getUserMedia({
 		video: true
 	}, function(stream) {
 		//on webcam enabled
