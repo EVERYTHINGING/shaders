@@ -183,13 +183,14 @@ function getWebcamVideo(callback){
 	window.URL = window.URL || window.webkitURL;
 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 	//get webcam
-	navigator.mediaDevices.getUserMedia({
-		video: true
-	}, function(stream) {
+	navigator.mediaDevices.getUserMedia({ video: true })
+	.then(function(stream) {
+		//on webcam enabled
 		//on webcam enabled
 		video.src = window.URL.createObjectURL(stream);
 		callback();
-	}, function(error) {
+	})
+	.catch(function(err) {
 		prompt.innerHTML = 'Unable to capture WebCam. Please reload the page.';
 	});
 }
