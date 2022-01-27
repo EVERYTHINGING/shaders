@@ -100,6 +100,7 @@ function resize() {
 window.onload = function(){ 
   loadShaders(function(){ 
   	getWebcamVideo(function(){
+  		console.log('callback');
   		init();
 		resize();
 		takeStill();
