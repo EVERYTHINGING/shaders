@@ -188,8 +188,8 @@ function getWebcamVideo(callback){
 	.then(function(stream) {
 		//on webcam enabled
 		console.log('webcam enabled');
-		//video.src = window.URL.createObjectURL(stream);
-		console.log(stream)
+		video.srcObject = stream;
+		//console.log(stream)
 		callback();
 	})
 	.catch(function(err) {
