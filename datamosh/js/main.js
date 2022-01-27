@@ -173,7 +173,7 @@ function loadShaders( callback ) {
     }
 }
 
-function getWebcamVideo(callback){
+function getWebcamVideo(cb){
 	//Use webcam
 	video = document.createElement('video');
 	video.width = 320;
@@ -189,7 +189,7 @@ function getWebcamVideo(callback){
 		//on webcam enabled
 		console.log('webcam enabled');
 		video.src = window.URL.createObjectURL(stream);
-		callback();
+		cb();
 	})
 	.catch(function(err) {
 		prompt.innerHTML = 'Unable to capture WebCam. Please reload the page.';
