@@ -100,7 +100,6 @@ function resize() {
 window.onload = function(){ 
   loadShaders(function(){ 
   	getWebcamVideo(function(){
-  		console.log('callback');
   		init();
 		resize();
 		takeStill();
@@ -190,6 +189,7 @@ function getWebcamVideo(cb){
 		//on webcam enabled
 		console.log('webcam enabled');
 		video.src = window.URL.createObjectURL(stream);
+		console.log(cb)
 		cb();
 	})
 	.catch(function(err) {
