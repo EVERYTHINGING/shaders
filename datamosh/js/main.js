@@ -124,7 +124,7 @@ window.onresize = function(){ resize(); }
 
 window.onkeypress = function(){
 
-	console.log(window.event.keyCode);
+	//console.log(window.event.keyCode);
 
 	switch(window.event.keyCode) {
 		case 32:
@@ -134,7 +134,7 @@ window.onkeypress = function(){
 }
 
 window.onkeyup = function(){
-	console.log(window.event.keyCode);
+	//console.log(window.event.keyCode);
 
 	switch(window.event.keyCode) {
 		case 66:
@@ -181,12 +181,12 @@ function getWebcamVideo(callback){
 	video.loop = true;
 	//Webcam video
 	window.URL = window.URL || window.webkitURL;
-	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+	//navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 	//get webcam
 	navigator.mediaDevices.getUserMedia({ video: true })
 	.then(function(stream) {
 		//on webcam enabled
-		//on webcam enabled
+		console.log('webcam enabled');
 		video.src = window.URL.createObjectURL(stream);
 		callback();
 	})
