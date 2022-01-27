@@ -13,6 +13,7 @@ var shaders = {
 };
 
 function init(){
+	console.log('init');
 	camera = new THREE.OrthographicCamera( -1, 1, 1, -1, 0, 1 );
 	renderer = new THREE.WebGLRenderer();
 	canvas = renderer.domElement;
