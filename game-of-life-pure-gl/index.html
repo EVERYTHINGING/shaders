@@ -43,18 +43,19 @@
 	const float COLOR_SPEED = 0.006; //higher is faster //values between 0.1 and 0.004 work best
 	const float SQRT3 = 1.73205080757;
 
-	float RADIUS    = 30.; 
-	float THICKNESS = 30.; //the square requires a thickness of at least 2.
+	float RADIUS    = 100.; 
+	float THICKNESS = 1.; //the square requires a thickness of at least 2.
 	vec2 MIDDLE     = vec2(resolution.x/2.,resolution.y/2.);
 	bool CHECK_SHAPE_ONCE = true;
 
 	float GRADIENT_FREQUENCY = .0005;
-	#define GRADIENT
+	//#define GRADIENT
 
 	//#define CHECK_SQUARE
 	//#define CHECK_CIRCLE
 	//#define CHECK_SEED_OF_LIFE
-	#define CHECK_MOUSE
+	#define CHECK_FLOWER_OF_LIFE
+	//#define CHECK_MOUSE
 
 	//#define CHECK_FLOWER_OF_LIFE
 	const float NUM_FLOWER_LAYERS = 2.;
@@ -95,6 +96,13 @@
 		if(olddr < 1.){ olddr = 0.; }
 		
 		return oldLeft + oldRight + oldDown + oldUp + oldul + oldur + olddl + olddr;
+	}
+
+	vec4 desaturate(vec3 color, float factor)
+	{
+		vec3 lum = vec3(0.299, 0.587, 0.114);
+		vec3 gray = vec3(dot(lum, color));
+		return vec4(mix(color, gray, factor), 1.0);
 	}
 
 	float shapeCheck(float outColorAlpha) {
@@ -240,7 +248,6 @@
 		
 		if(outColor.a < 1. && oldColor.rgb != vec3(0.)){ outColor.rgb = hueToRGB(outColor.a); } //if cell is dead use old hue shift amount
 		if(outColor.a == 1.){ outColor.rgb = hueToRGB(newColorHueShiftAmount);  } //if cell is alive use new hue shift amount
-		
 		
 		gl_FragColor = outColor;
 	}
