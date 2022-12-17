@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0024)http://glsl.heroku.com/e -->
 <html lang="en" data-ember-extension="1"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>GLSL Sandbox</title>
+		<title>BEINGS OF LIGHT</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 		<style>
@@ -44,7 +44,7 @@
 	const float SQRT3 = 1.73205080757;
 
 	float RADIUS    = 100.; 
-	float THICKNESS = 2.; //the square requires a thickness of at least 2.
+	float THICKNESS = 1.; //the square requires a thickness of at least 2.
 	vec2 MIDDLE     = vec2(resolution.x/2.,resolution.y/2.);
 	bool CHECK_SHAPE_ONCE = true;
 
@@ -106,7 +106,7 @@
 	}
 
 	float shapeCheck(float outColorAlpha) {
-		RADIUS *= (time*0.1);
+		RADIUS *= (time*0.5);
 		//RADIUS += 300.;
 		
 		#ifdef CHECK_TRIANGLE
