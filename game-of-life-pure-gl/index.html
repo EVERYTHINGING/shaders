@@ -44,17 +44,17 @@
 	const float SQRT3 = 1.73205080757;
 
 	float RADIUS    = 100.; 
-	float THICKNESS = 1.; //the square requires a thickness of at least 2.
+	float THICKNESS = 2.; //the square requires a thickness of at least 2.
 	vec2 MIDDLE     = vec2(resolution.x/2.,resolution.y/2.);
 	bool CHECK_SHAPE_ONCE = true;
 
 	float GRADIENT_FREQUENCY = .0005;
 	//#define GRADIENT
 
-	//#define CHECK_SQUARE
+	#define CHECK_SQUARE
 	//#define CHECK_CIRCLE
 	//#define CHECK_SEED_OF_LIFE
-	#define CHECK_FLOWER_OF_LIFE
+	//#define CHECK_FLOWER_OF_LIFE
 	//#define CHECK_MOUSE
 
 	//#define CHECK_FLOWER_OF_LIFE
@@ -98,16 +98,11 @@
 		return oldLeft + oldRight + oldDown + oldUp + oldul + oldur + olddl + olddr;
 	}
 
-	vec4 desaturate(vec3 color, float factor)
-	{
-		vec3 lum = vec3(0.299, 0.587, 0.114);
-		vec3 gray = vec3(dot(lum, color));
-		return vec4(mix(color, gray, factor), 1.0);
-	}
-
 	float shapeCheck(float outColorAlpha) {
-		
+		RADIUS *= (time*0.1);
+
 		#ifdef CHECK_SQUARE
+			vec2 position = vec2(0.);
 			if(gl_FragCoord.x > MIDDLE.x-RADIUS && gl_FragCoord.x < MIDDLE.x+RADIUS && gl_FragCoord.y > MIDDLE.y-RADIUS && gl_FragCoord.y < MIDDLE.y+RADIUS){
 			  
 				if(gl_FragCoord.x < MIDDLE.x-(RADIUS-THICKNESS) || gl_FragCoord.x > MIDDLE.x+(RADIUS-THICKNESS) || gl_FragCoord.y < MIDDLE.y-(RADIUS-THICKNESS) || gl_FragCoord.y > MIDDLE.y+(RADIUS-THICKNESS)){
