@@ -51,7 +51,8 @@
 	float GRADIENT_FREQUENCY = .0005;
 	//#define GRADIENT
 
-	#define CHECK_SQUARE
+	#define CHECK_TRIANGLE
+	//#define CHECK_SQUARE
 	//#define CHECK_CIRCLE
 	//#define CHECK_SEED_OF_LIFE
 	//#define CHECK_FLOWER_OF_LIFE
@@ -67,6 +68,20 @@
 	        0.0, 1.0);
 	}
 
+
+	bool pointInTriangle(vec2 p, vec2 p0, vec2 p1, vec2 p2) {
+		float A = 0.5 * (-p1.y * p2.x + p0.y * (-p1.x + p2.x) + p0.x * (p1.y - p2.y) + p1.x * p2.y);
+		float _sign = A < 0. ? -1. : 1.;
+		float s = (p0.y * p2.x - p0.x * p2.y + (p2.y - p0.y) * p.x + (p0.x - p2.x) * p.y) * _sign;
+		float t = (p0.x * p1.y - p0.y * p1.x + (p0.y - p1.y) * p.x + (p1.x - p0.x) * p.y) * _sign;
+		
+		if(s > 0. && t > 0. && (s + t) < (2. * A * _sign)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	float countNeighbours() {
 		
 		vec2 left      = vec2(gl_FragCoord.x-1., gl_FragCoord.y)/resolution;
@@ -78,28 +93,40 @@
 		vec2 downleft  = vec2(gl_FragCoord.x-1., gl_FragCoord.y-1.)/resolution;
 		vec2 downright = vec2(gl_FragCoord.x+1., gl_FragCoord.y-1.)/resolution;	
 		
-		float oldLeft  = texture2D(backbuffer, left).a;
-		if(oldLeft < 1.){ oldLeft = 0.; }
-		float oldRight = texture2D(backbuffer, right).a;
-		if(oldRight < 1.){ oldRight = 0.; }
-		float oldUp    = texture2D(backbuffer, up).a;
-		if(oldUp < 1.){ oldUp = 0.; }
-		float oldDown  = texture2D(backbuffer, down).a;
-		if(oldDown < 1.){ oldDown = 0.; }
-		float oldul    = texture2D(backbuffer, upleft).a;
-		if(oldul < 1.){ oldul = 0.; }
-		float oldur    = texture2D(backbuffer, upright).a;
-		if(oldur < 1.){ oldur = 0.; }
-		float olddl    = texture2D(backbuffer, downleft).a;
-		if(olddl < 1.){ olddl = 0.; }
-		float olddr    = texture2D(backbuffer, downright).a;	
-		if(olddr < 1.){ olddr = 0.; }
+		float oldl     = floor(texture2D(backbuffer, left).a);
+		float oldr     = floor(texture2D(backbuffer, right).a);
+		float oldu     = floor(texture2D(backbuffer, up).a);
+		float oldd      = floor(texture2D(backbuffer, down).a);
+		float oldul    = floor(texture2D(backbuffer, upleft).a);
+		float oldur    = floor(texture2D(backbuffer, upright).a);
+		float olddl    = floor(texture2D(backbuffer, downleft).a);
+		float olddr    = floor(texture2D(backbuffer, downright).a);	
 		
-		return oldLeft + oldRight + oldDown + oldUp + oldul + oldur + olddl + olddr;
+		return oldl + oldr + oldd + oldu + oldul + oldur + olddl + olddr;
 	}
 
 	float shapeCheck(float outColorAlpha) {
 		RADIUS *= (time*0.1);
+		//RADIUS += 300.;
+		
+		#ifdef CHECK_TRIANGLE
+			float angle = 30.0;
+			float angle2 = 210.0;
+			vec2 a = vec2(MIDDLE.x+(cos((angle)*0.0174532925)*RADIUS), MIDDLE.y+(sin((angle)*0.0174532925)*RADIUS));
+			vec2 b = vec2(MIDDLE.x+(cos((angle+120.)*0.0174532925)*RADIUS), MIDDLE.y+(sin((angle+120.)*0.0174532925)*RADIUS));
+			vec2 c = vec2(MIDDLE.x+(cos((angle+240.)*0.0174532925)*RADIUS), MIDDLE.y+(sin((angle+240.)*0.0174532925)*RADIUS));
+
+			vec2 d = vec2(MIDDLE.x+(cos((angle2)*0.0174532925)*RADIUS), MIDDLE.y+(sin((angle2)*0.0174532925)*RADIUS));
+			vec2 e = vec2(MIDDLE.x+(cos((angle2+120.)*0.0174532925)*RADIUS), MIDDLE.y+(sin((angle2+120.)*0.0174532925)*RADIUS));
+			vec2 f = vec2(MIDDLE.x+(cos((angle2+240.)*0.0174532925)*RADIUS), MIDDLE.y+(sin((angle2+240.)*0.0174532925)*RADIUS));
+			
+			if(pointInTriangle(gl_FragCoord.xy, a, b, c) || pointInTriangle(gl_FragCoord.xy, d, e, f)){
+				outColorAlpha = 1.;
+			}
+			
+			
+		#endif
+		
 
 		#ifdef CHECK_SQUARE
 			vec2 position = vec2(0.);
