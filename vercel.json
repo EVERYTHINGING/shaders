@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    { "source": "/datamosh/(.*)", "destination": "/datamosh/$1" },
+    { "source": "/dla/(.*)", "destination": "/dla/$1" },
+    { "source": "/game-of-life/(.*)", "destination": "/game-of-life/$1" },
+    { "source": "/game-of-life-pure-gl/(.*)", "destination": "/game-of-life-pure-gl/$1" },
+    { "source": "/mandelbrot-orbit-traps/(.*)", "destination": "/mandelbrot-orbit-traps/$1" },
+    { "source": "/multiscale-turing/(.*)", "destination": "/multiscale-turing/$1" },
+    { "source": "/particles/(.*)", "destination": "/particles/$1" },
+    { "source": "/shiva-fractal/(.*)", "destination": "/shiva-fractal/$1" },
+    { "source": "/soulwire-particles/(.*)", "destination": "/soulwire-particles/$1" },
+    { "source": "/zoom/(.*)", "destination": "/zoom/$1" }
+  ]
+}
