@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>WebGL Shader Lab - Diffusion Mix [Fullscreen]</title>
-<script src="headtrackr.js"></script>
+<script src="/zoom/headtrackr.js"></script>
 <script id="shader-vs" type="x-shader/x-vertex"> 
   attribute vec3 aPos;
   attribute vec2 aTexCoord;
@@ -194,7 +194,7 @@ void main(void) {
 		  handleLoadedTexture(texture_camera);
 		}
 
-		texture_camera.image.src = "texture.jpg";
+		texture_camera.image.src = "/zoom/texture.jpg";
 	}
 
 	function handleLoadedTexture(texture) {
