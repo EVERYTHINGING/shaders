@@ -6,6 +6,19 @@ var BUFFER_STATE = 0;
 
 var canvas, simUniforms, simScene, simBuffer, backBuffer, displayScene, camera, renderer, outQuad;
 
+// Fallback shader sources if not provided by the HTML
+var basicVertexShader = (function() {
+  var el = document.getElementById('shader-vs');
+  if (el && el.text) return el.text;
+  return 'attribute vec3 position;\nvoid main(){\n  gl_Position = vec4(position, 1.0);\n}';
+})();
+
+var simFragmentShader = (function() {
+  var el = document.getElementById('shader-fs');
+  if (el && el.text) return el.text;
+  return 'precision highp float;\nuniform vec2 resolution;\nuniform float time;\nvoid main(){\n  vec2 uv = gl_FragCoord.xy / resolution;\n  float v = 0.5 + 0.5 * sin(10.0*uv.x + 10.0*uv.y + time);\n  gl_FragColor = vec4(uv, v, 1.0);\n}';
+})();
+
 function init(){
   var plotVertexShader = document.getElementById('vs-plot').text;
   var plotFragmentShader = document.getElementById('fs-plot').text;
@@ -31,7 +44,14 @@ function init(){
   simScene = new THREE.Scene();
   displayScene = new THREE.Scene();
 
-  var simQuad = new THREE.Mesh(new THREE.PlaneGeometry(2,2,0), new THREE.ShaderMaterial({ uniforms: simUniforms, vertexShader: basicVertexShader, fragmentShader: simFragmentShader}));
+  var simQuad = new THREE.Mesh(
+    new THREE.PlaneGeometry(2,2,0),
+    new THREE.ShaderMaterial({
+      uniforms: simUniforms,
+      vertexShader: updateVertexShader,
+      fragmentShader: updateFragmentShader
+    })
+  );
   simScene.add(simQuad);
   simScene.add(camera);
 
